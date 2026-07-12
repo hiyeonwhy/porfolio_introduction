@@ -159,16 +159,14 @@
 <!-- Repository: https://github.com/YOUR_GITHUB_USERNAME/YOUR_REPOSITORY -->
 
 ---
-## 📊 GitHub Statistics
+## 📊 Language Statistics
 
 <p align="center">
   <img
-    src="https://github-readme-stats.vercel.app/api/top-langs/?username=hiyeonwhy&layout=compact&langs_count=8&custom_title=Most%20Used%20Languages&title_color=2f80ed&text_color=434d58&bg_color=ffffff&border_color=d8dee4&card_width=380"
+    src="https://github-stats-extended.vercel.app/api/top-langs/?username=hiyeonwhy&layout=compact&langs_count=8&custom_title=Most%20Used%20Languages&title_color=2f80ed&text_color=434d58&bg_color=ffffff&border_color=d8dee4&card_width=380"
     alt="hiyeonwhy Most Used Languages"
   />
-</p>
-
-<p align="center">
+  <br/><br/>
   <img
     src="https://komarev.com/ghpvc/?username=hiyeonwhy&label=Profile%20views&color=0e75b6&style=flat"
     alt="hiyeonwhy Profile Views"
