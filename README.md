@@ -101,17 +101,18 @@
 - **기간:** 2025.05 ~ 2025.06
 - **역할:** 팀장 및 HW/SW 통합 개발
 - Zynq-7000의 PS와 PL을 **AXI4-Lite Custom Peripheral**로 연동했습니다.
+- 도형 판별, 색칠 상태 관리, 완료 검출과 화면 출력 연산을 FPGA의 Custom IP로 구현했습니다.
 - TFT-LCD, TextLCD, 7-Segment, UART, SD Card를 하나의 시스템으로 통합했습니다.
-- BRAM과 FATFS를 활용하여 RGB565 이미지 데이터를 TFT-LCD에 출력했습니다.
-- 사용자 로그인, 게임 선택, 색칠 판정, 완료 검출 및 점수 관리 기능을 구현했습니다.
-- 메모리 주소 충돌, XDC 핀 중복, IO 배치 오류와 같은 HW/SW 통합 문제를 해결했습니다.
+- BRAM과 FATFS를 활용하여 RGB565 이미지를 TFT-LCD에 출력했습니다.
+- 사용자 로그인, 게임 선택, 제한 시간 및 점수 관리 기능을 ARM 기반 소프트웨어로 구현했습니다.
+- 메모리 주소 충돌, XDC 핀 중복, I/O 배치 오류 등의 HW/SW 통합 문제를 해결했습니다.
 
 **Tech Stack**
 
-`Zynq-7000` `ARM Cortex-A9` `FPGA` `Verilog`  
+`Zynq-7000` `ARM Cortex-A9` `FPGA` `Verilog HDL`  
 `C` `AXI4-Lite` `Vivado` `Xilinx SDK` `FATFS`
 
-<!-- Repository: https://github.com/YOUR_GITHUB_USERNAME/YOUR_REPOSITORY -->
+**Repository:** [hiyeonwhy/zync_draw_game](https://github.com/hiyeonwhy/zync_draw_game)
 
 ---
 
@@ -120,97 +121,66 @@
 > 자율주행 로봇이 공장 내부를 순찰하며 작업자 쓰러짐과 연기를 감지하는 시스템
 
 - 기업 연계 팀 프로젝트로 진행했습니다.
-- ROS2 기반 UGV에 YOLO 영상 분석 노드를 연동했습니다.
-- YOLO Pose 모델을 활용하여 작업자의 **쓰러짐 자세**를 감지했습니다.
-- Custom YOLO 모델을 활용하여 공장 내부의 **연기 발생 상황**을 감지했습니다.
-- 감지 결과를 ROS2 Topic으로 발행하여 관리자 시스템으로 전달했습니다.
-- 단일 프레임 오검출을 줄이기 위해 Sliding Window 기반 필터링 로직을 적용했습니다.
-- Camera Topic 불일치, Launch Remapping, OpenCV 처리 지연 문제를 분석하고 개선했습니다.
+- `slam_toolbox`와 Nav2를 활용하여 ROS2 기반 실내 자율주행 시스템을 구성했습니다.
+- Wheel Odometry와 IMU 데이터를 EKF로 융합하여 주행 중 위치 추정 안정성을 개선했습니다.
+- YOLO Pose 모델로 작업자의 쓰러짐 자세를 감지하고, Custom YOLO 모델로 연기를 감지했습니다.
+- 단일 프레임 오검출을 줄이기 위해 Sliding Window 기반 누적 판단 로직을 적용했습니다.
+- 감지 결과를 ROS2 Topic으로 발행하여 관리자 시스템과 연동했습니다.
+- Camera Topic 불일치, Launch Remapping, QoS 설정 및 OpenCV 처리 지연 문제를 분석했습니다.
 
 **Tech Stack**
 
-`ROS2` `Jetson Nano` `Python` `YOLOv11 Pose`  
+`ROS2 Humble` `Nav2` `slam_toolbox` `robot_localization`  
+`Jetson Nano` `Python` `C++` `YOLOv11 Pose`  
 `OpenCV` `PyTorch` `CvBridge` `v4l2_camera`
 
-<!-- Repository: https://github.com/YOUR_GITHUB_USERNAME/YOUR_REPOSITORY -->
+**Repository:** [hiyeonwhy/ros2-ugv-factory-safety](https://github.com/hiyeonwhy/ros2-ugv-factory-safety)
+
+> 저장소에는 ROS2 자율주행, SLAM, Nav2, 센서 융합 및 UGV 하드웨어 인터페이스가 포함되어 있습니다. YOLO 인식 노드는 별도 Python 패키지로 개발되어 현재 저장소에는 포함되어 있지 않습니다.
 
 ---
 
-### 3. F1TENTH 충돌 예측 및 긴급 제동
+### 4. TurtleBot 미로 자율주행 및 ArUco 정밀 도킹
 
-> LiDAR 데이터를 활용한 ROS2 기반 자율주행 차량 충돌 방지 시스템
+> 좁은 미로를 자율주행한 뒤 ArUco 마커를 기반으로 목표 지점에 정밀 도킹하는 시스템
 
-- LiDAR 거리와 차량 속도를 기반으로 TTC(Time To Collision)를 계산했습니다.
-- 충돌 위험이 기준값 이하로 판단되면 차량을 즉시 정지하도록 구현했습니다.
-- 불필요한 장애물 데이터를 제외하기 위해 ROI 기반 LiDAR 필터링을 적용했습니다.
-- 주행 환경에 따라 제동 기준을 조절하는 Adaptive Threshold 방식을 적용했습니다.
-- 시뮬레이션과 실차 테스트를 반복하며 제동 안정성을 검증했습니다.
-
-**Tech Stack**
-
-`ROS2` `F1TENTH` `LiDAR` `TTC`  
-`Python` `C++` `Gazebo`
-
-<!-- Repository: https://github.com/YOUR_GITHUB_USERNAME/YOUR_REPOSITORY -->
-
----
-
-### 4. TurtleBot SLAM 및 Navigation 성능 개선
-
-> 지도 오차와 반복 충돌 문제를 분석하여 자율주행 안정성을 개선한 프로젝트
-
-- ROS1 기반 Mapping, AMCL, Navigation을 구성했습니다.
-- 특정 구간에서 반복적으로 발생하는 위치 오차와 벽 충돌 문제를 분석했습니다.
-- 로그와 지도 데이터를 확인하여 초기 지도 생성 과정의 누적 오차를 원인으로 판단했습니다.
-- 지도를 재생성하고 AMCL 및 Costmap 파라미터를 조정했습니다.
-- rosbag을 활용하여 주행 데이터를 기록하고 경로 및 RMSE를 비교했습니다.
-- 속도 변화와 IMU 적용 여부가 SLAM 정확도에 미치는 영향을 분석했습니다.
+- ROS1 기반 SLAM, AMCL 및 Navigation Stack을 구성했습니다.
+- 좁은 통로에서 발생하는 경로 생성 실패와 벽 충돌 문제를 분석했습니다.
+- 로봇의 실제 크기에 맞게 `footprint`, `inflation_radius`, `cost_scaling_factor` 등의 Costmap 파라미터를 조정했습니다.
+- ArUco 마커의 위치와 자세를 추정하여 로봇의 방향과 접근 거리를 제어했습니다.
+- `INITIAL_FORWARD → AUTO_MODE → STRAIGHT-ONLY MODE` 상태 머신으로 도킹 과정을 구현했습니다.
+- 마커가 보이지 않는 근거리에서는 Odometry 기반 직진 제어로 전환했습니다.
+- 카메라 내부 파라미터와 LiDAR–카메라 외부 파라미터를 직접 캘리브레이션했습니다.
 
 **Tech Stack**
 
-`ROS1` `TurtleBot` `SLAM` `AMCL`  
-`Navigation` `Costmap` `rosbag` `LiDAR` `IMU`
+`ROS1 Noetic` `TurtleBot` `SLAM` `AMCL`  
+`Navigation Stack` `Costmap` `C++` `Python`  
+`OpenCV` `ArUco` `LiDAR` `Odometry`
 
-<!-- Repository: https://github.com/YOUR_GITHUB_USERNAME/YOUR_REPOSITORY -->
-
----
-
-### 5. GotYA 문화 콘텐츠 추천 서비스
-
-> 사용자의 취향을 기반으로 영화, 도서, 문화행사를 추천하는 웹 서비스
-
-- Django REST Framework와 Vue 3를 활용한 웹 서비스를 개발했습니다.
-- 영화, 도서, 문화행사 데이터를 JSON으로 정제하여 Django ORM으로 적재했습니다.
-- 외부 콘텐츠 ID를 기준으로 기존 데이터는 갱신하고 신규 데이터는 추가하는 Upsert 구조를 구현했습니다.
-- 콘텐츠 검색, 필터링, 좋아요, 다시 보지 않기, 마이페이지 기능을 구현했습니다.
-- Custom User 모델과 서비스 요구사항을 기준으로 ERD를 개선했습니다.
-- 반복적인 데이터 적재 작업을 개선하기 위한 데이터 파이프라인 구조를 설계했습니다.
-
-**Tech Stack**
-
-`Django` `Django REST Framework` `Vue 3`  
-`Vite` `Pinia` `REST API` `Django ORM`
-
-<!-- Repository: https://github.com/YOUR_GITHUB_USERNAME/YOUR_REPOSITORY -->
+**Repository:** [hiyeonwhy/turtlebot-maze-docking](https://github.com/hiyeonwhy/turtlebot-maze-docking)
 
 ---
 
 ### 6. S32K144 암호 통신 장치
 
-> ARM Cortex-M4F MCU의 주변장치를 통합한 임베디드 시스템
+> ARM Cortex-M4F MCU의 주변장치와 인터럽트를 통합한 베어메탈 임베디드 시스템
 
-- S32K144 기반 GPIO, UART, LPIT Timer, Keypad, TextLCD, 7-Segment를 제어했습니다.
-- Keypad 입력과 UART 통신을 활용한 암호 입력 및 출력 시스템을 구현했습니다.
-- 다중 외부 인터럽트 사용 시 발생하던 과도한 Interrupt Trigger 문제를 분석했습니다.
-- 입력 처리 방식을 Timer 기반 Polling 구조로 변경하여 시스템 안정성을 개선했습니다.
+- S32K144의 SDK 드라이버 대신 레지스터를 직접 제어하는 방식으로 구현했습니다.
+- GPIO 외부 인터럽트를 활용하여 다중 스위치 조합 인증 기능을 구현했습니다.
+- 난수를 생성해 Character LCD에 표시하고, 정해진 위치의 숫자를 조합해 암호를 생성했습니다.
+- LPIT Timer 인터럽트로 4×3 Matrix Keypad를 주기적으로 스캔했습니다.
+- 입력한 최근 네 자리를 4-digit 7-Segment에 동적으로 표시했습니다.
+- 입력값이 암호와 일치하면 LCD와 RGB LED를 통해 결과를 출력하도록 구현했습니다.
+- GPIO, Timer, Keypad, LCD, 7-Segment, RGB LED와 부저를 하나의 상태 기반 시스템으로 통합했습니다.
 
 **Tech Stack**
 
-`S32K144` `ARM Cortex-M4F` `C`  
-`GPIO` `UART` `LPIT` `Keypad` `TextLCD`
+`S32K144` `ARM Cortex-M4F` `C` `Bare-metal`  
+`GPIO Interrupt` `LPIT Timer` `Matrix Keypad`  
+`7-Segment` `Character LCD` `RGB LED`
 
-<!-- Repository: https://github.com/YOUR_GITHUB_USERNAME/YOUR_REPOSITORY -->
-
+**Repository:** [hiyeonwhy/s32k144-cipher-lock](https://github.com/hiyeonwhy/s32k144-cipher-lock)
 ---
 
 ## 🎓 Education & Experience
